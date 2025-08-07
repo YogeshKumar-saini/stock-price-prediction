@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Data Downloader</title>
+</head>
+<body>
+    <h2>📈 Download Stock Data</h2>
+
+    <form method="POST" action="/download">
+        <label for="ticker">Select Company or Ticker:</label><br>
+        <select name="ticker" id="ticker" required>
+            <option value="" disabled selected>Select a stock</option>
+            <option value="AAPL">Apple Inc. (AAPL)</option>
+            <option value="GOOG">Alphabet Inc. (GOOG)</option>
+            <option value="MSFT">Microsoft Corp. (MSFT)</option>
+            <option value="TSLA">Tesla Inc. (TSLA)</option>
+            <option value="AMZN">Amazon.com Inc. (AMZN)</option>
+            <option value="NVDA">NVIDIA Corp. (NVDA)</option>
+            <option value="META">Meta Platforms Inc. (META)</option>
+            <option value="NFLX">Netflix Inc. (NFLX)</option>
+            <option value="JPM">JPMorgan Chase (JPM)</option>
+            <option value="V">Visa Inc. (V)</option>
+        </select><br><br>
+
+        <label for="period">Select Time Period:</label><br>
+        <select name="period">
+            <option value="1mo">1 Month</option>
+            <option value="3mo">3 Months</option>
+            <option value="6mo">6 Months</option>
+            <option value="1y">1 Year</option>
+            <option value="2y">2 Years</option>
+            <option value="5y" selected>5 Years</option>
+            <option value="10y">10 Years</option>
+            <option value="ytd">Year to Date</option>
+            <option value="max">Max</option>
+        </select><br><br>
+
+        <button type="submit">⬇️ Download CSV</button>
+    </form>
+
+    {% if success %}
+        <p>✅ Data for {{ ticker }} downloaded successfully!</p>
+        <a href="{{ url_for('get_csv', ticker=ticker) }}">Click here to download {{ file }}</a>
+    {% endif %}
+</body>
+</html>
