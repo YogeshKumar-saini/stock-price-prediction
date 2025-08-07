@@ -1,138 +1,127 @@
+📈 Stock Price Predictor API
 
-```md
-# 📈 Stock Price Prediction App using LSTM & Flask
+A machine learning-powered API built with FastAPI to forecast stock prices. This project uses a Linear Regression model trained on historical data to predict the closing price for the next day and the next week.
 
-This project is a web-based application that predicts the **next day's stock closing price** using a deep learning LSTM (Long Short-Term Memory) model. It utilizes **historical stock market data** fetched via `yfinance` and is deployed via a lightweight Flask web interface.
+A brief demonstration of the web interface.
+✨ Features
 
----
+    Frontend Interface: Simple and clean UI built with HTML & Tailwind CSS.
 
-## 🚀 Features
+    Next-Day Prediction: Get an instant forecast for the next trading day's closing price.
 
-- 📉 Predicts the next day’s stock closing price
-- 🔁 Utilizes LSTM Neural Networks for time series forecasting
-- 🌐 Simple and interactive web interface built with Flask
-- 🔍 Preprocessing with MinMaxScaler for accurate scaling
-- 📊 Visualization of historical trends and predicted values
+    Weekly Forecast: Perform a recursive forecast to predict prices for the next 5 days.
 
----
+    Automated Data Handling: The API automatically uses the latest data from the dataset, no manual input required.
 
-## 🛠️ Tech Stack
+    Ready for Deployment: Built with FastAPI, a modern, high-performance web framework.
 
-| Category       | Tools Used                         |
-|----------------|------------------------------------|
-| Frontend       | HTML, CSS (via Jinja templates)    |
-| Backend        | Python, Flask                      |
-| Data Handling  | pandas, numpy, yfinance            |
-| Machine Learning | TensorFlow/Keras (LSTM model)     |
-| Visualization  | Matplotlib                         |
+🛠️ Tech Stack
 
----
+    Backend: Python, FastAPI
 
-## 📁 Project Structure
+    Machine Learning: Scikit-learn, Pandas, NumPy
 
-```
+    Frontend: HTML, Tailwind CSS
 
-📂 stock-price-predictor/
-├── 📁 static/
-│   └── styles.css (optional)
-├── 📁 templates/
-│   └── index.html
-├── 📄 app.py
-├── 📄 stock\_dl\_model.h5  # Saved LSTM model
-├── 📄 utils.py           # (optional) helper functions
-├── 📄 requirements.txt
-└── 📄 README.md
+    Server: Uvicorn
 
+📂 Project Structure
 
+.
+├── 📄 main_auto.py         # The main FastAPI application
+├── 📄 index.html           # The HTML frontend
+├── 📦 stock_price_model.joblib # The trained machine learning model
+├── 📦 scaler.joblib        # The fitted data scaler
+├── 📊 preprocessed_stock_data.csv # The dataset used for prediction
+└── 📄 README.md            # You are here!
 
-```
+🚀 Getting Started
 
----
+Follow these instructions to set up and run the project on your local machine.
+1. Prerequisites
 
-## 🧠 Model Architecture
+    Python 3.8+
 
-- Input Layer: LSTM (64 units)
-- Hidden Layer: LSTM (64 units)
-- Output Layer: Dense (1 neuron)
-- Optimizer: Adam
-- Loss: Mean Squared Error
+    pip package manager
 
----
+2. Installation
 
-## 📊 Sample Prediction
+Clone the repository and install the required Python packages.
 
-```
+# Navigate to your project directory
+cd path/to/your/project
 
-Date: 2025-08-07
-Actual Price: ₹222.30
-Predicted Price: ₹224.12
+# Install the dependencies
+pip install "fastapi[all]" scikit-learn pandas joblib
 
-````
+3. Running the Application
 
-> *Note: Model predictions are based on patterns learned from past prices and do not reflect future investment advice.*
+Once the installation is complete, you can start the API server using Uvicorn.
 
----
+uvicorn main_auto:app --reload
 
-## 🧪 How to Run Locally
+The server will start and be accessible at http://127.0.0.1:8000.
+💡 Usage
 
-```bash
-# Clone this repository
-git clone https://github.com/your-username/stock-price-predictor.git
-cd stock-price-predictor
+After starting the server, open your web browser and navigate to http://127.0.0.1:8000.
 
-# (Optional) Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # For Linux/macOS
-venv\Scripts\activate     # For Windows
+You will see the web interface where you can:
 
-# Install dependencies
-pip install -r requirements.txt
+    Click "Predict Next Day" to get a single price prediction.
 
-# Run the app
-python app.py
-````
+    Click "Predict Next Week" to get a 5-day price forecast.
 
-Then open your browser and go to `http://127.0.0.1:5000/`
+🌐 API Endpoints
 
----
+The application exposes the following API endpoints:
 
-## 📦 Requirements
+Method
+	
 
-```
-Flask
-numpy
-pandas
-yfinance
-matplotlib
-tensorflow
-scikit-learn
-```
+Endpoint
+	
 
----
+Description
 
-## 💡 Future Improvements
+GET
+	
 
-* Add multiple stock options for selection
-* Predict high/low/volume along with closing price
-* Implement attention mechanism for better accuracy
-* Dockerize the app for containerized deployment
+/
+	
 
----
+Serves the main index.html frontend.
 
-## 🤝 Contributing
+GET
+	
 
-Contributions are welcome! Feel free to fork the project, submit issues, or create PRs.
+/predict_next_day/
+	
 
----
+Returns the predicted closing price for the next day.
 
-## 📜 License
+GET
+	
 
-This project is licensed under the MIT License.
+/predict_next_week/
+	
 
+Returns a 5-day forecast of closing prices.
 
-```
+GET
+	
 
----
+/docs
+	
 
-Let me know if you want the `README.md` file saved directly, or would like to include a GIF/image demo, or links to model performance charts.
-```
+Displays the interactive API documentation (Swagger UI).
+🧠 Model Details
+
+The prediction model is a Linear Regression model from scikit-learn.
+
+    Features Used: The model is trained on 5 "lagged" features from the previous day: Open, High, Low, Close, and Volume.
+
+    Forecasting Method: For the weekly forecast, the model uses a recursive strategy where the prediction for Day 1 is used as an input to predict Day 2, and so on.
+
+⚠️ Disclaimer
+
+This project is for educational purposes only and should not be used for making real financial decisions. Stock market prediction is inherently complex and uncertain. The predictions generated by this model are not guaranteed to be accurate.
